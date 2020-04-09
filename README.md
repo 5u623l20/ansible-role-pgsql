@@ -1,5 +1,8 @@
 # Ansible Role: PostgreSQL
-[![Build Status](https://travis-ci.org/5u623l20/ansible-role-pgsql.svg?branch=master)](https://travis-ci.org/5u623l20/ansible-role-pgsql)
+[![GitHub license](https://img.shields.io/github/license/5u623l20/ansible-role-pgsql)](https://github.com/5u623l20/ansible-role-pgsql/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/5u623l20/ansible-role-pgsql)](https://travis-ci.org/5u623l20/ansible-role-pgsql)
+[![Ansible role](https://img.shields.io/ansible/role/47595)](https://galaxy.ansible.com/5u623l20/pgsql)
+[![Ansible Quality](https://img.shields.io/ansible/quality/47595)](https://galaxy.ansible.com/5u623l20/pgsql)
 
 Installs and configures PostgreSQL server on *nix alike OS.
 
@@ -160,3 +163,4 @@ BSD-3-CLAUSE
 
 Created in 2020 by [Muhammad Moinur Rahman](https://bofh.am)
 Modified from [Jeff Geerling's](https://www.jeffgeerling.com/) [Ansible Role: PostgreSQL](https://github.com/geerlingguy/ansible-role-postgresql/)
+
