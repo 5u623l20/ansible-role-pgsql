@@ -1,0 +1,35 @@
+galaxy_info:
+  role_name: pgsql
+  author: Muhammad Moinur Rahman
+  description: PostgreSQL server for *nix alike OS.
+  company: DZCRD Networks Ltd.
+  license: license (BSD-3-Clause)
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+    - name: FreeBSD
+      versions:
+        - 11.3
+        - 12.1
+    - name: HardenedBSD
+      versions:
+        - all
+  galaxy_tags:
+    - pgsql
+    - database
+    - postgresql
+    - postgres
+    - rdbms
+
+dependencies: []

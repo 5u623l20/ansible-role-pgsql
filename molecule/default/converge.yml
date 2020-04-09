@@ -1,0 +1,40 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    pgsql_databases:
+      - name: 5u623l20
+    pgsql_users:
+      - name: 5u623l20
+
+  pre_tasks:
+    - name: Set database locale if using RedHat 8+
+      set_fact:
+        pgsql_databases:
+          - name: 5u623l20
+            lc_collate: 'C.UTF-8'
+            lc_ctype: 'C.UTF-8'
+      when:
+        - ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8')
+
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+
+    - name: Update FreeBSD python version
+      pkgng:
+        name: python3
+        state: latest
+      when: ansible_os_family == 'FreeBSD'
+
+  roles:
+    - role: ansible-role-pgsql
+
+  post_tasks:
+    - name: Verify postgres is running.
+      command: "{{ pgsql_bin_path }}/pg_ctl -D {{ pgsql_data_dir }} status"
+      changed_when: false
+      become: true
+      become_user: postgres

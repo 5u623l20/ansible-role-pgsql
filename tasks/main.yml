@@ -1,0 +1,84 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      paths:
+        - 'vars'
+
+- name: Include OS-specific tasks.
+  include_tasks: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      paths:
+        - 'tasks'
+
+- name: Generate RANDOM Password
+  set_fact:
+    random_pass: "{{ lookup('password', 'credentials/' + ansible_hostname + '/pgsqlpassword') }}"
+  when: (pgsql_users|length > 0) and ( pgsql_users.password is undefined )
+
+- name: Configure host based authentication (if entries are configured).
+  template:
+    src: "pg_hba.conf.j2"
+    dest: "{{ pgsql_config_path }}/pg_hba.conf"
+    owner: "{{ pgsql_user }}"
+    group: "{{ pgsql_group }}"
+    mode: 0600
+  notify: restart postgresql
+  when: pgsql_hba_entries | length > 0
+
+- name: Ensure PostgreSQL is started and enabled on boot.
+  service:
+    name: "{{ pgsql_daemon }}"
+    state: "{{ pgsql_service_state }}"
+    enabled: "{{ pgsql_service_enabled }}"
+
+- name: Ensure PostgreSQL users are present.
+  postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | default(random_pass) }}"
+    encrypted: "{{ item.encrypted | default(omit) }}"
+    priv: "{{ item.priv | default(omit) }}"
+    role_attr_flags: "{{ item.role_attr_flags | default(omit) }}"
+    db: "{{ item.db | default(omit) }}"
+    login_host: "{{ item.login_host | default('localhost') }}"
+    login_password: "{{ item.login_password | default(omit) }}"
+    login_user: "{{ item.login_user | default(pgsql_user) }}"
+    login_unix_socket: "{{ item.login_unix_socket | default(pgsql_unix_socket_dir) }}"
+    port: "{{ item.port | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ pgsql_users }}"
+  no_log: "{{ postgres_users_no_log }}"
+  become: true
+  become_user: "{{ pgsql_user }}"
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: Ensure PostgreSQL databases are present.
+  postgresql_db:
+    name: "{{ item.name }}"
+    lc_collate: "{{ item.lc_collate | default('en_US.UTF-8') }}"
+    lc_ctype: "{{ item.lc_ctype | default('en_US.UTF-8') }}"
+    encoding: "{{ item.encoding | default('UTF-8') }}"
+    template: "{{ item.template | default('template0') }}"
+    login_host: "{{ item.login_host | default('localhost') }}"
+    login_password: "{{ item.login_password | default(omit) }}"
+    login_user: "{{ item.login_user | default(pgsql_user) }}"
+    login_unix_socket: "{{ item.login_unix_socket | default(pgsql_unix_socket_dir) }}"
+    port: "{{ item.port | default('5432') }}"
+    owner: "{{ item.owner | default(pgsql_users.name) | default(pgsql_user) }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ pgsql_databases }}"
+  become: true
+  become_user: "{{ pgsql_user }}"
+  vars:
+    ansible_ssh_pipelining: true

@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  remote_user: root
+  roles:
+    - ansible-role-pgsql
+  vars:
+    pgsql_databases:
+      - name: 5u623l20
+    pgsql_users:
+      - name: 5u623l20
