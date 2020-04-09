@@ -38,3 +38,5 @@
       changed_when: false
       become: true
       become_user: postgres
+      vars:
+        ansible_ssh_pipelining: true
