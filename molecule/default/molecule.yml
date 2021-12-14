@@ -19,11 +19,11 @@ driver:
 platforms:
   - name: instance
     box: ${MOLECULE_DISTRO}
-    interfaces:
-      - network_name: public_network
-        dev: "virbr0"
-        type: "bridge"
-        mode: "bridge"
+    #interfaces:
+    #  - network_name: public_network
+    #    dev: "virbr0"
+    #    type: "bridge"
+    #    mode: "bridge"
     # List of raw Vagrant `config` options
     instance_raw_config_args:
       # use single quotes to avoid YAML parsing as dict due to ':'
