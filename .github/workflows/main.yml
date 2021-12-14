@@ -1,0 +1,74 @@
+---
+name: CI
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "30 7 * * 3"
+
+defaults:
+  run:
+    working-directory: '5u623l20.pgsql'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-10.15
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: '5u623l20.pgsql'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible ansible-lint yamllint
+
+      - name: Lint code(yamllint)
+        run: |
+          yamllint .
+
+      - name: Lint code(ansible-lint)
+        run: |
+          ansible-lint
+
+  molecule:
+    name: Molecule
+    runs-on: macos-10.15
+    strategy:
+      matrix:
+        distro:
+          - generic/ubuntu1804
+          - generic/ubuntu2004
+          - debian/bullseye64
+          - debian/buster64
+          - generic/freebsd12
+          - generic/freebsd13
+          - centos/7
+          - centos/8
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: '5u623l20.pgsql'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule[vagrant] molecule-vagrant
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}

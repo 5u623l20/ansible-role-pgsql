@@ -1,25 +1,47 @@
 ---
+
 dependency:
   name: galaxy
 driver:
   name: vagrant
   provider:
-    name: libvirt
-    type: libvirt
-    driver: kvm
-    options:
-      memory: 2048
-      cpus: 2
+    name: virtualbox
+  # Run vagrant up with --provision.
+  # Defaults to --no-provision)
+  provision: no
+  # vagrant-cachier configuration
+  # Defaults to 'machine'
+  # Any value different from 'machine' or 'box' will disable it
+  cachier: machine
+  # If set to false, set VAGRANT_NO_PARALLEL to '1'
+  # Defaults to true
+  parallel: true
 platforms:
   - name: instance
-    box: ${MOLECULE_DISTRO_BOX:-""}
+    box: ${MOLECULE_DISTRO}
     interfaces:
       - network_name: public_network
         dev: "virbr0"
         type: "bridge"
         mode: "bridge"
+    # List of raw Vagrant `config` options
+    instance_raw_config_args:
+      # use single quotes to avoid YAML parsing as dict due to ':'
+      - 'vm.synced_folder ".", "/vagrant", type: "rsync"'
+      # Run 'uname' a provisionning step **needs 'provision: true' to work**
+      - 'vm.provision :shell, inline: "uname"'
+    # Dictionary of `config` options. Note that string values need to be
+    # explicitly enclosed in quotes.
+    config_options:
+      ssh.keep_alive: yes
+      ssh.remote_user: 'vagrant'
+      synced_folder: true
+    memory: 512
+    cpus: 1
 provisioner:
   name: ansible
   log: true
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
 verifier:
   name: ansible

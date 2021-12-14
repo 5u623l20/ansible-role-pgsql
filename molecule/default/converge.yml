@@ -30,7 +30,7 @@
       when: ansible_os_family == 'FreeBSD'
 
   roles:
-    - role: ansible-role-pgsql
+    - role: "5u623l20.pgsql"
 
   post_tasks:
     - name: Verify postgres is running.
