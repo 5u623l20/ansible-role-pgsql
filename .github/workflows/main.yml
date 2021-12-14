@@ -86,4 +86,3 @@ jobs:
           key: ${{ runner.os }}-vagrant-${{ matrix.distro }}
           restore-keys: |
             ${{ runner.os }}-vagrant-
-
