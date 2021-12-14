@@ -51,14 +51,12 @@ jobs:
         experimental: [false]
         distro:
           - debian/bullseye64
+          - generic/freebsd12
+          - generic/ubuntu1804
         include:
-          - distro: generic/ubuntu1804
-            experimental: true
           - distro: generic/ubuntu2004
             experimental: true
           - distro: debian/buster64
-            experimental: true
-          - distro: generic/freebsd12
             experimental: true
           - distro: generic/freebsd13
             experimental: true
