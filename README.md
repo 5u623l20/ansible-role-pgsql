@@ -1,8 +1,8 @@
 # Ansible Role: PostgreSQL
 [![GitHub license](https://img.shields.io/github/license/5u623l20/ansible-role-pgsql)](https://github.com/5u623l20/ansible-role-pgsql/blob/master/LICENSE)
-[![Travis](https://img.shields.io/travis/5u623l20/ansible-role-pgsql)](https://travis-ci.org/5u623l20/ansible-role-pgsql)
 [![Ansible role](https://img.shields.io/ansible/role/47595)](https://galaxy.ansible.com/5u623l20/pgsql)
 [![Ansible Quality](https://img.shields.io/ansible/quality/47595)](https://galaxy.ansible.com/5u623l20/pgsql)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/5u623l20/ansible-role-pgsql/CI)](https://github.com/5u623l20/ansible-role-pgsql/actions/workflows/main.yml)
 
 Installs and configures PostgreSQL server on *nix alike OS.
 
