@@ -50,17 +50,17 @@ jobs:
       matrix:
         experimental: [false]
         distro:
-          - generic/freebsd13]
+          - debian/bullseye64
         include:
           - distro: generic/ubuntu1804
             experimental: true
           - distro: generic/ubuntu2004
             experimental: true
-          - distro: debian/bullseye64
-            experimental: true
           - distro: debian/buster64
             experimental: true
           - distro: generic/freebsd12
+            experimental: true
+          - distro: generic/freebsd13
             experimental: true
     steps:
       - name: Check out the codebase.
@@ -76,17 +76,17 @@ jobs:
       - name: Install test dependencies.
         run: pip3 install ansible molecule[vagrant] molecule-vagrant
 
-      - name: Run Molecule tests.
-        run: molecule test
-        env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_DISTRO: ${{ matrix.distro }}
-
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
           path: ~/.vagrant.d/boxes
           key: ${{ runner.os }}-vagrant-${{ matrix.distro }}
           restore-keys: |
-            ${{ runner.os }}-vagrant-
+            ${{ runner.os }}-vagrant-${{ matrix.distro }}
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
