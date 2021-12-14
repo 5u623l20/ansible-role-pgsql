@@ -45,21 +45,16 @@ jobs:
   molecule:
     name: Molecule
     runs-on: macos-10.15
-    continue-on-error: ${{ matrix.experimental }}
+    continue-on-error: true
     strategy:
       matrix:
-        experimental: [false]
         distro:
           - debian/bullseye64
+          - debian/buster64
           - generic/freebsd12
+          - generic/freebsd13
           - generic/ubuntu1804
-        include:
-          - distro: generic/ubuntu2004
-            experimental: true
-          - distro: debian/buster64
-            experimental: true
-          - distro: generic/freebsd13
-            experimental: true
+          - generic/ubuntu2004
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
