@@ -73,9 +73,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.vagrant.d/boxes
-          key: ${{ runner.os }}-vagrant-${GITHUB_REPOSITORY}-${{ matrix.distro }}
+          key: ${{ runner.os }}-vagrant-${{ matrix.distro }}
           restore-keys: |
-            ${{ runner.os }}-vagrant-${GITHUB_REPOSITORY}-${{ matrix.distro }}
+            ${{ runner.os }}-vagrant-${{ matrix.distro }}
 
       - name: Run Molecule tests.
         run: molecule test
