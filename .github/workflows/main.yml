@@ -50,7 +50,6 @@ jobs:
           - debian/buster64
           - generic/freebsd12
           - generic/freebsd13
-          - centos/7
           - centos/8
     steps:
       - name: Check out the codebase.
