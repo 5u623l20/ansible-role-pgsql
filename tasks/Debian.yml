@@ -1,4 +1,9 @@
 ---
+- name: Ensure gnupg is installed.
+  apt:
+    name: "gnupg"
+    state: present
+
 - name: Add PostgreSQL repository key
   block:
     - name: Add key from Postgresql site
