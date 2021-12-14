@@ -7,10 +7,6 @@ galaxy_info:
   min_ansible_version: 2.9
   namespace: 5u623l20
   platforms:
-    - name: EL
-      versions:
-        - 7
-        - 8
     - name: Debian
       versions:
         - bullseye
