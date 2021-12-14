@@ -1,9 +1,0 @@
----
-pgsql_data_dir: "/var/lib/pgsql/{{ pgsql_version }}/data"
-pgsql_bin_path: "/usr/pgsql-{{ pgsql_version }}/bin"
-pgsql_config_path: "/var/lib/pgsql/{{ pgsql_version }}/data"
-pgsql_daemon: "postgresql-{{ pgsql_version }}"
-pgsql_packages:
-  - "postgresql{{ pgsql_version }}-server"
-  - "postgresql{{ pgsql_version }}-contrib"
-pgsql_python_library: python-psycopg2
