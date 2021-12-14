@@ -55,7 +55,7 @@ pgsql_global_config_options:
     value: '{{ pgsql_unix_socket_directories | join(",") }}'
 ```
 
-Global configuration options that will be set in `postgresql.conf`. Note that for RHEL/CentOS 6 (or very old versions of PostgreSQL), you need to at least override this variable and set the `option` to `unix_socket_directory`.
+Global configuration options that will be set in `postgresql.conf`.
 
 ```yaml
 pgsql_hba_entries:

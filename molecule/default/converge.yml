@@ -9,15 +9,6 @@
       - name: 5u623l20
 
   pre_tasks:
-    - name: Set database locale if using RedHat 8+
-      set_fact:
-        pgsql_databases:
-          - name: 5u623l20
-            lc_collate: 'C.UTF-8'
-            lc_ctype: 'C.UTF-8'
-      when:
-        - ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8')
-
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600
       changed_when: false
