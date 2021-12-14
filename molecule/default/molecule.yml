@@ -15,7 +15,7 @@ driver:
   cachier: machine
   # If set to false, set VAGRANT_NO_PARALLEL to '1'
   # Defaults to true
-  parallel: parallel
+  parallel: false
 platforms:
   - name: instance
     box: ${MOLECULE_DISTRO}
