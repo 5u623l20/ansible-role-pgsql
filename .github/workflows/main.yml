@@ -49,14 +49,8 @@ jobs:
     strategy:
       matrix:
         experimental: [false]
-        distro:
-          - generic/ubuntu2004
-          - debian/bullseye64
-          - debian/buster64
-          - generic/freebsd12
-          - generic/freebsd13
         include:
-          - distro: generic/ubuntu/1804
+          - distro: [generic/ubuntu1804, generic/ubuntu2004, debian/bullseye64, debian/buster64, generic/freebsd12, generic/freebsd13]
             experimental: true
     steps:
       - name: Check out the codebase.
