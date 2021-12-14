@@ -57,7 +57,7 @@ pgsql_users: []
 # Whether to output user data when managing users.
 postgres_users_no_log: true
 
-pgsql_version: "11"
+pgsql_version: "13"
 pgsql_data_dir: "/var/lib/postgresql/{{ pgsql_version }}/main"
 pgsql_bin_path: "/usr/lib/postgresql/{{ pgsql_version }}/bin"
 pgsql_config_path: "/etc/postgresql/{{ pgsql_version }}/main"
