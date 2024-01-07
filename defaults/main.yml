@@ -12,7 +12,7 @@ pgsql_unix_socket_dir: /var/run/postgresql
 pgsql_service_state: started
 pgsql_service_enabled: true
 
-# Host based authentication (hba) entries to be added to the pg_hba.conf. Addional to 
+# Host based authentication (hba) entries to be added to the pg_hba.conf. Addional to
 # defaults should be noted here.
 pgsql_hba_entries: []
 #  - {type: local, database: all, user: postgres, auth_method: peer}
@@ -57,7 +57,7 @@ pgsql_users: []
 # Whether to output user data when managing users.
 postgres_users_no_log: true
 
-pgsql_version: "13"
+pgsql_version: "15"
 pgsql_data_dir: "/var/lib/postgresql/{{ pgsql_version }}/main"
 pgsql_bin_path: "/usr/lib/postgresql/{{ pgsql_version }}/bin"
 pgsql_config_path: "/etc/postgresql/{{ pgsql_version }}/main"

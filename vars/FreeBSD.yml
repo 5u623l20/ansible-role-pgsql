@@ -1,5 +1,5 @@
 ---
-python_default_version: 38
+python_default_version: 39
 pgsql_unix_socket_dir: /tmp
 pgsql_python_library: "py{{ python_default_version }}-psycopg2"
 pgsql_data_dir: "/var/db/postgres/data{{ pgsql_version }}"
