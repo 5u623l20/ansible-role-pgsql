@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  become: true
+  become: yes
   vars:
     pgsql_databases:
       - name: 5u623l20
@@ -9,11 +9,10 @@
       - name: 5u623l20
 
   pre_tasks:
-    - name: Update apt cache.
+    - name: Update apt cache
       ansible.builtin.apt:
         update_cache: "true"
         cache_valid_time: "600"
-        cmd: ""
       changed_when: false
       when: ansible_os_family == 'Debian'
 
