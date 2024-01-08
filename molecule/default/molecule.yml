@@ -29,7 +29,7 @@ platforms:
     # explicitly enclosed in quotes.
     config_options:
       ssh.keep_alive: yes
-      ssh.remote_user: 'vagrant'
+      ssh.remote_user: vagrant
       synced_folder: true
     memory: 512
     cpus: 1

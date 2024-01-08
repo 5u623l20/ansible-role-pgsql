@@ -1,20 +1,20 @@
 ---
 name: CI
-'on':
+on:
   pull_request:
   push:
     branches:
       - main
   schedule:
-    - cron: "30 7 * * 3"
+    - cron: 30 7 * * 3
 
 concurrency:
-    group: ${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
-    working-directory: '5u623l20.pgsql'
+    working-directory: 5u623l20.pgsql
 
 jobs:
   lint:
@@ -24,11 +24,11 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v4
         with:
-          path: '5u623l20.pgsql'
+          path: 5u623l20.pgsql
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: 3.x
       - name: Install test dependencies.
         run: pip3 install yamllint
       - name: Lint code
@@ -52,11 +52,11 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v4
         with:
-          path: '5u623l20.pgsql'
+          path: 5u623l20.pgsql
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: 3.x
       - name: Install test dependencies.
         run: pip3 install ansible molecule-plugins[vagrant]
       - name: Cache Vagrant boxes

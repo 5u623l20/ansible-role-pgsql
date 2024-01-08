@@ -1,37 +1,40 @@
 ---
 - name: Ensure gnupg is installed.
-  apt:
-    name: "gnupg"
+  ansible.builtin.apt:
+    name: gnupg
     state: present
 
 - name: Add PostgreSQL repository key
   block:
     - name: Add key from Postgresql site
-      apt_key:
+      ansible.builtin.apt_key:
         url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
         state: present
   rescue:
     - name: Add key from Local file
-      apt_key:
+      ansible.builtin.apt_key:
         data: "{{ lookup('file', 'files/ACCC4CF8.asc') }}"
         state: present
 
 - name: Add PostgreSQL repository
-  apt_repository:
-    repo: 'deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main'
+  ansible.builtin.apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main
     state: present
 
 - name: Ensure all configured locales are present.
-  locale_gen: "name={{ item }} state=present"
+  community.general.locale_gen:
+    name: "{{"
+    state: present
+    cmd: item }}
   with_items: "{{ pgsql_locales }}"
   register: locale_gen_result
 
 - name: Ensure PostgreSQL Python libraries are installed.
-  apt:
+  ansible.builtin.apt:
     name: "{{ pgsql_python_library }}"
     state: present
 
 - name: Ensure PostgreSQL packages are installed.
-  apt:
+  ansible.builtin.apt:
     name: "{{ pgsql_packages }}"
     state: present

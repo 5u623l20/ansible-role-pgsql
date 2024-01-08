@@ -1,49 +1,49 @@
 ---
-- name: Include OS-specific variables.
-  include_vars: "{{ lookup('first_found', params) }}"
+- name: Include OS-specific variables
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
   vars:
     params:
       files:
         - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
         - "{{ ansible_distribution }}.yml"
         - "{{ ansible_os_family }}.yml"
+      skip: true
       paths:
-        - 'vars'
+        - vars
 
-- name: Include OS-specific tasks.
-  include_tasks: "{{ lookup('first_found', params) }}"
-  vars:
-    params:
-      files:
+- name: Include OS-specific tasks
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
+  with_first_found:
+    - files:
         - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
         - "{{ ansible_distribution }}.yml"
         - "{{ ansible_os_family }}.yml"
-      paths:
-        - 'tasks'
+      skip: true
 
 - name: Generate RANDOM Password
-  set_fact:
+  ansible.builtin.set_fact:
     random_pass: "{{ lookup('password', 'credentials/' + ansible_hostname + '/pgsqlpassword') }}"
   when: (pgsql_users|length > 0) and ( pgsql_users.password is undefined )
 
-- name: Configure host based authentication (if entries are configured).
-  template:
-    src: "pg_hba.conf.j2"
+- name: Configure host based authentication (if entries are configured)
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
     dest: "{{ pgsql_config_path }}/pg_hba.conf"
     owner: "{{ pgsql_user }}"
     group: "{{ pgsql_group }}"
-    mode: 0600
+    mode: "0600"
   notify: restart postgresql
   when: pgsql_hba_entries | length > 0
 
-- name: Ensure PostgreSQL is started and enabled on boot.
-  service:
+- name: Ensure PostgreSQL is started and enabled on boot
+  ansible.builtin.service:
     name: "{{ pgsql_daemon }}"
     state: "{{ pgsql_service_state }}"
     enabled: "{{ pgsql_service_enabled }}"
 
-- name: Ensure PostgreSQL users are present.
-  postgresql_user:
+- name: Ensure PostgreSQL users are present
+  community.postgresql.postgresql_user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(random_pass) }}"
     encrypted: "{{ item.encrypted | default(omit) }}"
@@ -63,8 +63,8 @@
   vars:
     ansible_ssh_pipelining: true
 
-- name: Ensure PostgreSQL databases are present.
-  postgresql_db:
+- name: Ensure PostgreSQL databases are present
+  community.postgresql.postgresql_db:
     name: "{{ item.name }}"
     lc_collate: "{{ item.lc_collate | default('en_US.UTF-8') }}"
     lc_ctype: "{{ item.lc_ctype | default('en_US.UTF-8') }}"

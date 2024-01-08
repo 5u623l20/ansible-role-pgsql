@@ -1,19 +1,19 @@
 ---
 - name: Install Postgresql packages
-  pkgng:
+  community.general.pkgng:
     name: "{{ pgsql_packages }}"
     state: present
 
 - name: Install Postgresql python library packages
-  pkgng:
+  community.general.pkgng:
     name: "{{ pgsql_python_library }}"
     state: present
 
 - name: Check if PostgreSQL database is initialized.
-  stat:
+  ansible.builtin.stat:
     path: "{{ pgsql_data_dir }}"
   register: pgdata_dir_version
 
 - name: Ensure PostgreSQL database is initialized.
-  command: "/usr/local/etc/rc.d/{{ pgsql_daemon }} oneinitdb"
+  ansible.builtin.command: /usr/local/etc/rc.d/{{ pgsql_daemon }} oneinitdb
   when: not pgdata_dir_version.stat.exists

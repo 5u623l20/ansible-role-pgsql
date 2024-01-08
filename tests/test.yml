@@ -1,9 +1,10 @@
 ---
-- hosts: localhost
+- name: Test
+  hosts: localhost
   connection: local
   remote_user: root
   roles:
-    - ansible-role-pgsql
+    - 5u623l20.pgsql
   vars:
     pgsql_databases:
       - name: 5u623l20

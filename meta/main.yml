@@ -1,29 +1,35 @@
+---
 galaxy_info:
-  role_name: pgsql
   author: Moin Rahman
   description: PostgreSQL server for *nix alike OS.
-  company: DZCRD Networks Ltd.
+  company: Cybermancer Infosec
+  role_name: pgsql
   license: license (BSD-3-Clause)
-  min_ansible_version: 2.9
+  min_ansible_version: "2.9"
   namespace: 5u623l20
   platforms:
+    - name: AlmaLinux
+      versions:
+        - 8
+    - name: Alpine
+      versions:
+        - 3.19
     - name: Debian
       versions:
+        - bookworm
         - bullseye
-        - buster
-    - name: Ubuntu
-      versions:
-        - bionic
-        - focal
     - name: FreeBSD
       versions:
-        - 11.3
-        - 12.1
+        - 13.2
+        - 14.0
+    - name: Ubuntu
+      versions:
+        - jammy
+        - focal
   galaxy_tags:
     - pgsql
     - database
     - postgresql
     - postgres
     - rdbms
-
 dependencies: []

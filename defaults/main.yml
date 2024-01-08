@@ -1,7 +1,7 @@
 ---
 # Set postgresql state when configuration changes are made. Recommended values:
 # `restarted` or `reloaded`
-pgsql_restarted_state: "restarted"
+pgsql_restarted_state: restarted
 
 pgsql_python_library: python3-psycopg2
 pgsql_user: postgres
@@ -22,7 +22,7 @@ pgsql_hba_entries: []
 
 # Debian only. Used to generate the locales used by PostgreSQL databases.
 pgsql_locales:
-  - 'en_US.UTF-8'
+  - en_US.UTF-8
 
 # Databases to ensure exist.
 pgsql_databases: []
@@ -58,9 +58,9 @@ pgsql_users: []
 postgres_users_no_log: true
 
 pgsql_version: "15"
-pgsql_data_dir: "/var/lib/postgresql/{{ pgsql_version }}/main"
-pgsql_bin_path: "/usr/lib/postgresql/{{ pgsql_version }}/bin"
-pgsql_config_path: "/etc/postgresql/{{ pgsql_version }}/main"
-pgsql_daemon: "postgresql@{{ pgsql_version }}-main"
+pgsql_data_dir: /var/lib/postgresql/{{ pgsql_version }}/main
+pgsql_bin_path: /usr/lib/postgresql/{{ pgsql_version }}/bin
+pgsql_config_path: /etc/postgresql/{{ pgsql_version }}/main
+pgsql_daemon: postgresql@{{ pgsql_version }}-main
 pgsql_packages:
-  - "postgresql-{{ pgsql_version }}"
+  - postgresql-{{ pgsql_version }}
